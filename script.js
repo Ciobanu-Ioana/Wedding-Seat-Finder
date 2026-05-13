@@ -55,7 +55,7 @@ document.addEventListener('focusout', () => {
     }, 100);
 });
 
-let menuIndex = 1;
+let menuIndex = 0;
 
 const menuImages = [
     "images/meniu-mancare.png",
