@@ -7,21 +7,39 @@ function showPage(page) {
 }
 
 async function loadGuests() {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbzZlEJS8REg4PVICg35izUt7qrw3OF7MU-tQfBmLNlyzG0IfZBmSXpqwW3P1V_Lkkz4yw/exec");
-    const data = await res.json();
-    guests = data.guests;
-    loading = false;
+    const cached = localStorage.getItem("guests");
 
-    document.getElementById("splash").classList.add("fade-out");
-    setTimeout(() => {
-        document.getElementById("splash").style.display = "none";
-        document.getElementById("app").classList.remove("hidden");
-    }, 800);
+    if (cached) {
+        guests = JSON.parse(cached);
+        loading = false;
+        return;
+    }
+
+    const res = await fetch("https://script.google.com/macros/s/AKfycbzBKRHNiZGefdZ0pkOY1Vda7amH7bWmLStOF56aH3cwAvajINx-RjxMLKs1MZ7qZVhKuQ/exec");
+    const data = await res.json();
+
+    guests = data.guests;
+    localStorage.setItem("guests", JSON.stringify(guests));
+    loading = false;
 }
-loadGuests();
+
+document.addEventListener("DOMContentLoaded", initApp);
+
+function initApp() {
+    setTimeout(() => {
+        document.getElementById("splash").classList.add("fade-out");
+        setTimeout(() => {
+            document.getElementById("splash").style.display = "none";
+            document.getElementById("app").classList.remove("hidden");
+        }, 300);
+    }, 200);
+
+    loadGuests();
+}
 
 function liveSearch() {
-    const q = document.getElementById("searchName").value.toLowerCase();
+    const searchInput = document.getElementById("searchName");
+    const q = searchInput.value.toLowerCase().trim();
     const output = document.getElementById("results");
 
     if (loading) {
@@ -36,16 +54,20 @@ function liveSearch() {
 
     const matches = guests.filter(g => g.name.toLowerCase().includes(q));
 
-    if (matches.length === 0) {
-        output.innerHTML = "Niciun nume găsit.";
-        return;
-    }
+    output.innerHTML = matches.length
+        ? matches.map(i => `<div>${i.name} | Masa ${i.table}</div>`).join("")
+        : "Niciun nume găsit.";
 
-    let html = "";
-    matches.forEach(item => {
-        html += `<div>${item.name} | Masa ${item.table}</div>`;
-    });
-    output.innerHTML = html;
+    // if (matches.length === 0) {
+    //     output.innerHTML = "Niciun nume găsit.";
+    //     return;
+    // }
+    //
+    // let html = "";
+    // matches.forEach(item => {
+    //     html += `<div>${item.name} | Masa ${item.table}</div>`;
+    // });
+    // output.innerHTML = html;
 }
 
 document.addEventListener('focusout', () => {
