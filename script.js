@@ -8,18 +8,22 @@ function showPage(page) {
 
 async function loadGuests() {
     const cached = localStorage.getItem("guests");
+    let useCache = false;
 
     if (cached) {
-        guests = JSON.parse(cached);
-        loading = false;
-        return;
+        const parsed = JSON.parse(cached);
+        guests = parsed;
+        useCache = true;
     }
 
     const res = await fetch("https://script.google.com/macros/s/AKfycbzBKRHNiZGefdZ0pkOY1Vda7amH7bWmLStOF56aH3cwAvajINx-RjxMLKs1MZ7qZVhKuQ/exec");
     const data = await res.json();
 
-    guests = data.guests;
-    localStorage.setItem("guests", JSON.stringify(guests));
+    if (!useCache || JSON.stringify(guests) !== JSON.stringify(data.guests)) {
+        guests = data.guests;
+        localStorage.setItem("guests", JSON.stringify(guests));
+    }
+    
     loading = false;
 }
 
