@@ -59,7 +59,8 @@ let menuIndex = 0;
 
 const menuImages = [
     "images/meniu-mancare.png",
-    "images/meniu-bauturi.png"
+    "images/meniu-bauturi.png",
+    "images/meniu-coktail.png"
 ];
 
 function updateDots() {
