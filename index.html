@@ -2,249 +2,11 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Găsește-ți locul</title>
 
-    <style>
-        /* Prevent iPhone zoom & layout shift */
-        html, body {
-            height: 100%;
-            overscroll-behavior: none;
-        }
-
-        body {
-            font-family: "Playfair Display", serif;
-            background: #f9f7f4;
-            margin: 0;
-            padding: 0;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            min-height: 100vh;
-            text-align: center;
-            color: #4e4e4e;
-        }
-
-        #splash {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #f9f7f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            opacity: 1;
-            transition: opacity 0.8s ease;
-        }
-
-        #splash.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #splash-content {
-            text-align: center;
-        }
-
-        .initials {
-            font-size: 48px;
-            color: #b38b59;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .loading-text {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #7a7a7a;
-        }
-
-        .spinner {
-            border: 3px solid #ddd;
-            border-top: 3px solid #b38b59;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            margin: 0 auto;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Each page (section) */
-        .page {
-            width: 100%;
-            max-width: 420px;
-            padding: 40px 20px 120px 20px;
-        }
-
-        .hidden { display: none; }
-
-        h1 {
-            font-size: 28px;
-            font-weight: 500;
-            margin-bottom: 40px;
-            color: #2e2e2e;
-        }
-
-        /* Minimal input */
-        input {
-            width: 100%;
-            border: none;
-            border-bottom: 1px solid #bbb;
-            background: transparent;
-            font-size: 20px;
-            padding: 12px 0;
-            outline: none;
-            margin-bottom: 25px;
-        }
-
-        input:focus {
-            border-bottom: 1px solid #8f6e47;
-        }
-
-        /* Results */
-        #results {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
-        /* Bottom navigation bar */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #f9f7f4;
-            border-top: 2px solid #ddd;
-
-            display: flex;
-            justify-content: space-around;
-
-            padding: 20px 0;
-            font-size: 20px;
-
-            font-family: "Inter", sans-serif;
-        }
-
-        .bottom-nav div {
-            cursor: pointer;
-            color: #444;
-            transition: 0.2s;
-        }
-
-        .bottom-nav div:hover {
-            color: #b38b59;
-        }
- /* --- MOBILE VERSION --- */
-        @media (max-width: 480px) {
-
-            body {
-                display: block;
-                padding-top: 40px;
-            }
-
-            .page {
-                padding: 0 20px 120px 20px;
-                max-width: 380px;
-                margin: 0 auto;
-                text-align: center;
-            }
-
-
-            h1 {
-                font-size: 26px;
-                margin-top: 40px;
-                margin-bottom: 40px;
-                text-align: center;
-                line-height: 1.3;
-            }
-
-
-            input {
-                font-size: 22px;
-                text-align: center;
-                padding: 12px 0;
-            }
-
-            #results {
-                font-size: 20px;
-                margin-top: 25px;
-                line-height: 1.6;
-            }
-
-            .bottom-nav {
-                height: 70px;
-                padding: 10px 0;
-                font-size: 16px;
-            }
-
-            .bottom-nav div {
-                padding: 5px 0;
-                font-size: 14px;
-            }
-
-        }
-        
-       /* --- MOBILE VERSION --- */
-    @media (max-width: 480px) {
-
-    /* 1. Eliminăm comportamentul flex pe mobil */
-    body {
-        display: block !important;
-        padding-top: 20px;
-    }
-
-    /* 2. Pagina devine mai compactă */
-    .page {
-        padding: 0 16px 100px 16px;
-        max-width: 360px;
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    /* 3. Titlul se micșorează un pic și stă mai aproape de input */
-    h1 {
-        font-size: 22px;
-        margin-top: 20px;
-        margin-bottom: 24px;
-        line-height: 1.3;
-        padding: 0 10px;
-    }
-
-    /* 4. Input-ul mai compact, adaptat pentru mobile */
-    input {
-        font-size: 18px;
-        padding: 10px 0;
-        margin-bottom: 10px;
-    }
-
-    /* 5. Rezultatele se afișează mai aproape */
-    #results {
-        font-size: 18px;
-        margin-top: 14px;
-        line-height: 1.5;
-    }
-
-    /* 6. Navbar mai mic */
-    .bottom-nav {
-        height: 60px;
-        padding: 8px 0;
-        font-size: 14px;
-    }
-
-    .bottom-nav div {
-        font-size: 12px;
-        padding-top: 4px;
-    }
-}
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Cardo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
@@ -274,7 +36,24 @@
 
     <div class="page hidden" id="page-menu">
         <h1>Meniu</h1>
-        <p>(Coming soon)</p>
+
+        <div class="menu-carousel">
+
+            <img id="menuImage" src="images/meniu-mancare.png" alt="Menu" class="menu-image">
+
+            <div class="menu-controls">
+                <button onclick="prevMenu()" class="arrow-btn">&#9664;</button>
+
+                <div class="menu-dots">
+                    <span id="dot0" class="dot active"></span>
+                    <span id="dot1" class="dot"></span>
+                </div>
+
+                <button onclick="nextMenu()" class="arrow-btn">&#9654;</button>
+            </div>
+
+        </div>
+
     </div>
 
     <div class="bottom-nav">
@@ -284,65 +63,6 @@
     </div>
 </div>
 
-<script>
-    let guests = [];
-    let loading = true;
-
-    function showPage(page) {
-        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-        document.getElementById('page-' + page).classList.remove('hidden');
-    }
-
-    async function loadGuests() {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbzZlEJS8REg4PVICg35izUt7qrw3OF7MU-tQfBmLNlyzG0IfZBmSXpqwW3P1V_Lkkz4yw/exec");
-        const data = await res.json();
-        guests = data.guests;
-        loading = false;
-
-        document.getElementById("splash").classList.add("fade-out");
-        setTimeout(() => {
-            document.getElementById("splash").style.display = "none";
-            document.getElementById("app").classList.remove("hidden");
-        }, 800);
-    }
-    loadGuests();
-
-    function liveSearch() {
-        const q = document.getElementById("searchName").value.toLowerCase();
-        const output = document.getElementById("results");
-
-        if (loading) {
-            output.innerHTML = "Se încarcă numele...";
-            return;
-        }
-
-        if (!q) {
-            output.innerHTML = "";
-            return;
-        }
-
-        const matches = guests.filter(g => g.name.toLowerCase().includes(q));
-
-        if (matches.length === 0) {
-            output.innerHTML = "Niciun nume găsit.";
-            return;
-        }
-
-        let html = "";
-        matches.forEach(item => {
-            html += `<div>${item.name} | Masa ${item.table}</div>`;
-        });
-        output.innerHTML = html;
-    }
-
-    /* FIX Safari: return page to normal after closing keyboard */
-    document.addEventListener('focusout', () => {
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-            document.documentElement.style.zoom = "1";
-        }, 100);
-    });
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
